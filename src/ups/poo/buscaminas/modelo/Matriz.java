@@ -26,15 +26,4 @@ public class Matriz {
         this.matriz = matriz;
     }
 
-    //METODO RELLENAR MATRIZ
-    public void LlenarMatriz(){
-//        Random random = new Random();
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                matriz[i][j] = Integer.parseInt("0");
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 }

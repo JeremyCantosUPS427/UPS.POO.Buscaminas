@@ -30,7 +30,7 @@ public class CasillaVacia extends Casilla {
     @Override
     public char getSimboloDescubierto() {
         if (minasAdyacentes == 0) {
-            return 'V';
+            return '·';
         }
         return Character.forDigit(minasAdyacentes, 10);
     }

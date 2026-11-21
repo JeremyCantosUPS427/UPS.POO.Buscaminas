@@ -3,6 +3,8 @@ package ups.poo.buscaminas.modelo;
 import java.util.Random;
 
 public class Tablero extends Matriz {
+
+    //ATRIBUTOS
     private static final long serialVersionUID = 1L;
 
     public static final int FILAS = 10;
@@ -13,10 +15,12 @@ public class Tablero extends Matriz {
     private final int totalMinas;
     private int casillasSegurasDescubiertas;
 
+    //CONSTRUCTOR PARA MATRIZ
     public Tablero() {
         this(FILAS, COLUMNAS, TOTAL_MINAS);
     }
 
+    //CONSTRUCTOR PARA TABLERO
     public Tablero(int filas, int columnas, int totalMinas) {
         super(new int[filas][columnas]);
         this.casillas = new Casilla[filas][columnas];
@@ -24,6 +28,7 @@ public class Tablero extends Matriz {
         inicializarTablero();
     }
 
+    //METODO PARA INCIAR CREAR VALORES EN TABLERO
     private void inicializarTablero() {
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
@@ -40,6 +45,7 @@ public class Tablero extends Matriz {
         inicializarTablero();
     }
 
+    //METODO PARA GENERAR MINAS ALEATORIAS
     private void colocarMinasAleatorias() {
         Random random = new Random();
         int minasColocadas = 0;
@@ -56,6 +62,7 @@ public class Tablero extends Matriz {
         }
     }
 
+    //METODO CALCULAR MINAS CERCANAS
     private void calcularMinasAdyacentes() {
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
@@ -67,6 +74,7 @@ public class Tablero extends Matriz {
         }
     }
 
+    //CONTADOR DE MINAS ALREDEDOR
     private int contarMinasAlrededor(int fila, int columna) {
         int contador = 0;
         for (int df = -1; df <= 1; df++) {
@@ -84,11 +92,13 @@ public class Tablero extends Matriz {
         return contador;
     }
 
+    //VALIDAR COORDENADA
     public boolean esCoordenadaValida(int fila, int columna) {
         return fila >= 0 && fila < casillas.length
                 && columna >= 0 && columna < casillas[0].length;
     }
 
+    //GETTERS AND SETTERS
     public Casilla getCasilla(int fila, int columna) {
         return casillas[fila][columna];
     }
@@ -114,6 +124,7 @@ public class Tablero extends Matriz {
         return false;
     }
 
+    //METODO EXPANDIR CASILLAS VACIAS DEL TABLERO
     private void expandirVacias(int fila, int columna) {
         for (int df = -1; df <= 1; df++) {
             for (int dc = -1; dc <= 1; dc++) {
@@ -153,6 +164,7 @@ public class Tablero extends Matriz {
         return totalMinas;
     }
 
+    //ENVIAR DATOS A MATRIZ
     private void sincronizarMatriz() {
         int[][] datos = getMatriz();
         for (int i = 0; i < casillas.length; i++) {
@@ -166,4 +178,5 @@ public class Tablero extends Matriz {
         }
         setMatriz(datos);
     }
+
 }

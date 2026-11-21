@@ -14,6 +14,6 @@ public class CasillaMina extends Casilla {
 
     @Override
     public char getSimboloDescubierto() {
-        return 'X';
+        return '⬛';
     }
 }
