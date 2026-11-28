@@ -1,29 +1,44 @@
 package ups.poo.buscaminas.modelo;
 
-import java.util.Random;
+/** MATRIZ QUE PROTEGE SUS ELEMENTOS Y PERMITE REUTILIZAR LAS DIMENSIONES. */
+public abstract class Matriz<T> {
 
-public class Matriz {
+    private final T[][] elementos;
 
-    //ATRIBUTOS
-
-    int [][] matriz;
-    public Matriz(int [][] matriz) {
-        this.matriz = matriz;
+    protected Matriz(T[][] elementos) {
+        if (elementos == null || elementos.length == 0
+                || elementos[0] == null || elementos[0].length == 0) {
+            throw new IllegalArgumentException("La matriz debe tener filas y columnas.");
+        }
+        // COPIAR EL ARREGLO EXTERIOR Y CADA FILA; LOS OBJETOS GUARDADOS CONSERVAN SUS REFERENCIAS.
+        int columnas = elementos[0].length;
+        this.elementos = elementos.clone();
+        for (int fila = 0; fila < elementos.length; fila++) {
+            if (elementos[fila] == null || elementos[fila].length != columnas) {
+                throw new IllegalArgumentException("La matriz debe ser rectangular.");
+            }
+            this.elementos[fila] = elementos[fila].clone();
+        }
     }
 
-    //CONSTRUCTOR
-    public Matriz() {
-        this.matriz = new int[10][10];
+    public final int getFilas() {
+        return elementos.length;
     }
 
-    //GETTERS
-    public int[][] getMatriz() {
-        return matriz;
+    public final int getColumnas() {
+        return elementos[0].length;
     }
 
-    //METODO
-    public void setMatriz(int[][] matriz) {
-        this.matriz = matriz;
+    public final boolean esCoordenadaValida(int fila, int columna) {
+        return fila >= 0 && fila < getFilas()
+                && columna >= 0 && columna < getColumnas();
     }
 
+    protected final T getElemento(int fila, int columna) {
+        return elementos[fila][columna];
+    }
+
+    protected final void setElemento(int fila, int columna, T elemento) {
+        elementos[fila][columna] = elemento;
+    }
 }

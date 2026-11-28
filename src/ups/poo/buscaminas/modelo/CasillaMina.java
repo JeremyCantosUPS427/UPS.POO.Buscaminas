@@ -1,6 +1,8 @@
 package ups.poo.buscaminas.modelo;
 
-public class CasillaMina extends Casilla {
+/** REPRESENTA UNA MINA: DESCUBRIRLA HACE PERDER LA PARTIDA. */
+public final class CasillaMina extends Casilla {
+
     private static final long serialVersionUID = 1L;
 
     public CasillaMina(int fila, int columna) {
@@ -14,6 +16,6 @@ public class CasillaMina extends Casilla {
 
     @Override
     public char getSimboloDescubierto() {
-        return '⬛';
+        return '*';
     }
 }

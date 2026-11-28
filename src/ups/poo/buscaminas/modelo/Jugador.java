@@ -2,19 +2,19 @@ package ups.poo.buscaminas.modelo;
 
 import java.io.Serializable;
 
-public class Jugador implements Serializable {
+public final class Jugador implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String nombre;
     private int movimientos;
-    private int casillasMarcadas;
-    private boolean ganador;
+    private int banderasColocadas;
+    private EstadoPartida resultadoPartida;
+    private int victorias;
+    private int derrotas;
 
     public Jugador(String nombre) {
-        this.nombre = nombre;
-        this.movimientos = 0;
-        this.casillasMarcadas = 0;
-        this.ganador = false;
+        setNombre(nombre);
+        reiniciarPartida();
     }
 
     public String getNombre() {
@@ -22,7 +22,10 @@ public class Jugador implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El jugador debe tener un nombre.");
+        }
+        this.nombre = nombre.trim();
     }
 
     public int getMovimientos() {
@@ -30,32 +33,54 @@ public class Jugador implements Serializable {
     }
 
     public void incrementarMovimientos() {
-        this.movimientos++;
+        movimientos++;
     }
 
-    public int getCasillasMarcadas() {
-        return casillasMarcadas;
+    public int getBanderasColocadas() {
+        return banderasColocadas;
     }
 
-    public void registrarMarca(boolean marcada) {
-        if (marcada) {
-            this.casillasMarcadas++;
-        } else if (this.casillasMarcadas > 0) {
-            this.casillasMarcadas--;
+    public void actualizarBanderas(boolean banderaColocada) {
+        if (banderaColocada) {
+            banderasColocadas++;
+        } else if (banderasColocadas > 0) {
+            banderasColocadas--;
         }
     }
 
     public boolean isGanador() {
-        return ganador;
+        return resultadoPartida == EstadoPartida.GANADA;
     }
 
-    public void setGanador(boolean ganador) {
-        this.ganador = ganador;
+    public boolean isDerrotado() {
+        return resultadoPartida == EstadoPartida.PERDIDA;
     }
 
-    public void reiniciarEstadisticas() {
-        this.movimientos = 0;
-        this.casillasMarcadas = 0;
-        this.ganador = false;
+    public int getVictorias() {
+        return victorias;
+    }
+
+    public int getDerrotas() {
+        return derrotas;
+    }
+
+    public void registrarResultado(EstadoPartida resultado) {
+        // UNA PARTIDA FINALIZADA SOLO PUEDE SUMAR UN RESULTADO.
+        if (resultadoPartida != EstadoPartida.EN_CURSO || resultado == EstadoPartida.EN_CURSO) {
+            return;
+        }
+        resultadoPartida = resultado;
+        if (resultado == EstadoPartida.GANADA) {
+            victorias++;
+        } else {
+            derrotas++;
+        }
+    }
+
+    public void reiniciarPartida() {
+        movimientos = 0;
+        banderasColocadas = 0;
+        // LAS VICTORIAS Y DERROTAS DE LA SESIÓN SE CONSERVAN.
+        resultadoPartida = EstadoPartida.EN_CURSO;
     }
 }

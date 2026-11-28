@@ -1,20 +1,25 @@
 package ups.poo.buscaminas.modelo;
 
-public class CasillaVacia extends Casilla {
+/** REPRESENTA UNA CASILLA SEGURA Y ALMACENA CUÁNTAS MINAS TIENE EN SUS OCHO VECINAS. */
+public final class CasillaSegura extends Casilla {
+
     private static final long serialVersionUID = 1L;
 
+    // UN CERO PERMITE CONTINUAR LA EXPANSIÓN RECURSIVA; DE 1 A 8 INDICA EL BORDE DE LA REGIÓN.
     private int minasAdyacentes;
 
-    public CasillaVacia(int fila, int columna) {
+    public CasillaSegura(int fila, int columna) {
         super(fila, columna);
-        this.minasAdyacentes = 0;
     }
 
     public int getMinasAdyacentes() {
         return minasAdyacentes;
     }
 
-    public void setMinasAdyacentes(int minasAdyacentes) {
+    void setMinasAdyacentes(int minasAdyacentes) {
+        if (minasAdyacentes < 0 || minasAdyacentes > 8) {
+            throw new IllegalArgumentException("Una casilla puede tener entre 0 y 8 minas adyacentes.");
+        }
         this.minasAdyacentes = minasAdyacentes;
     }
 
@@ -30,7 +35,7 @@ public class CasillaVacia extends Casilla {
     @Override
     public char getSimboloDescubierto() {
         if (minasAdyacentes == 0) {
-            return '·';
+            return '.';
         }
         return Character.forDigit(minasAdyacentes, 10);
     }

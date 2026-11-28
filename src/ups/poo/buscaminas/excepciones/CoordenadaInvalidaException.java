@@ -1,21 +1,14 @@
 package ups.poo.buscaminas.excepciones;
 
 /**
- * Excepción verificada para validar coordenadas en el tablero de Buscaminas.
- * Se lanza cuando la entrada del usuario no respeta el formato esperado
- * (por ejemplo, letra de fila y columna como "A5") o queda fuera del rango válido.
- *
- * @author Ariel Orrala
- * @project UPS.POO.Buscaminas
+ * EXCEPCIÓN VERIFICADA PARA VALIDAR COORDENADAS EN EL TABLERO DE BUSCAMINAS.
+ * SE LANZA CUANDO LA ENTRADA DEL USUARIO NO RESPETA EL FORMATO ESPERADO
+ * (POR EJEMPLO, LETRA DE FILA Y COLUMNA COMO "A5") O QUEDA FUERA DEL RANGO VÁLIDO.
  */
 public class CoordenadaInvalidaException extends Exception {
 
-    // Identificador de versión para control de serialización
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Inicializa la excepción con un mensaje estándar de formato o rango inválido.
-     */
     public CoordenadaInvalidaException() {
         super("Coordenada inválida. Ingrese una fila y columna válidas (ejemplo: A5).");
     }
